@@ -2,6 +2,9 @@ package cn.canton.miaosha.controller;
 
 
 import cn.canton.miaosha.domain.User;
+import cn.canton.miaosha.redis.KeyPrefix;
+import cn.canton.miaosha.redis.RedisService;
+import cn.canton.miaosha.redis.UserKey;
 import cn.canton.miaosha.result.CodeMsg;
 import cn.canton.miaosha.result.Result;
 import cn.canton.miaosha.service.UserService;
@@ -18,6 +21,8 @@ public class DemoController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    RedisService redisService;
 
     @RequestMapping("/")
     @ResponseBody
@@ -56,6 +61,23 @@ public class DemoController {
     @ResponseBody
     public Result<Boolean> dbTx(){
         userService.tx();
+        return Result.success(true);
+    }
+
+    @RequestMapping("/redis/get")
+    @ResponseBody
+    public Result<User> redisGet(){
+        User user = redisService.get(UserKey.getById,""+1, User.class);
+        return Result.success(user);
+    }
+
+    @RequestMapping("/redis/set")
+    @ResponseBody
+    public Result<Boolean> redisSet(){
+        User user = new User();
+        user.setId(1);
+        user.setName("1111");
+        redisService.set(UserKey.getById,""+1, user);
         return Result.success(true);
     }
 }
