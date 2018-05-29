@@ -1,5 +1,8 @@
 package cn.canton.miaosha.result;
 
+import lombok.Data;
+
+@Data
 public class CodeMsg {
     private int code;
     private String msg;
@@ -21,11 +24,5 @@ public class CodeMsg {
         this.msg = msg;
     }
 
-    public int getCode() {
-        return code;
-    }
-    public String getMsg() {
-        return msg;
-    }
 }
 
