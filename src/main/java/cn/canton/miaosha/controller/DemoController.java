@@ -2,7 +2,6 @@ package cn.canton.miaosha.controller;
 
 
 import cn.canton.miaosha.domain.User;
-import cn.canton.miaosha.redis.KeyPrefix;
 import cn.canton.miaosha.redis.RedisService;
 import cn.canton.miaosha.redis.UserKey;
 import cn.canton.miaosha.result.CodeMsg;
