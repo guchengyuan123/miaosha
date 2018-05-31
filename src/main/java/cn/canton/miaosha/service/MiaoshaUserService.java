@@ -3,23 +3,35 @@ package cn.canton.miaosha.service;
 import cn.canton.miaosha.dao.MiaoshaUserDao;
 import cn.canton.miaosha.domain.MiaoshaUser;
 import cn.canton.miaosha.exception.GlobalException;
+import cn.canton.miaosha.redis.MiaoshaUserKey;
+import cn.canton.miaosha.redis.RedisService;
 import cn.canton.miaosha.result.CodeMsg;
 import cn.canton.miaosha.util.MD5Util;
+import cn.canton.miaosha.util.UUIDUtil;
 import cn.canton.miaosha.vo.LoginVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class MiaoshaUserService {
 
+    public static final String COOKIE_NAME_TOKEN = "token";
+
     @Autowired
     MiaoshaUserDao miaoshaUserDao;
+
+    @Autowired
+    RedisService redisService;
 
     public MiaoshaUser getById(long id){
         return miaoshaUserDao.getById(id);
     }
 
-    public boolean login(LoginVo loginVo) {
+    public boolean login(HttpServletResponse response, LoginVo loginVo) {
         if (loginVo == null){
             throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
@@ -37,6 +49,29 @@ public class MiaoshaUserService {
         if (!calcPass.equals(dbPass)){
             throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }
+        //生成cookie
+        addCookie(response, user);
         return true;
+    }
+
+    public MiaoshaUser getByToken(HttpServletResponse response, String token) {
+        if (StringUtils.isEmpty(token)){
+            return null;
+        }
+        MiaoshaUser user = redisService.get(MiaoshaUserKey.token,token,MiaoshaUser.class);
+        //延长有效期
+        if (user != null){
+            addCookie(response, user);
+        }
+        return user;
+    }
+
+    private void addCookie(HttpServletResponse response, MiaoshaUser user){
+        String token = UUIDUtil.uuid();
+        redisService.set(MiaoshaUserKey.token,token,user);
+        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN,token);
+        cookie.setMaxAge(MiaoshaUserKey.token.expireSeconds());
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 }

@@ -44,7 +44,7 @@ public class DemoController {
     }
 
     @RequestMapping("/thymeleaf")
-    public String  thymeleaf(Model model) {
+    public String thymeleaf(Model model) {
         model.addAttribute("name", "canton");
         return "hello";
     }
