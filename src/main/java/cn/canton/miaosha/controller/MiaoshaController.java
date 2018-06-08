@@ -36,6 +36,9 @@ public class MiaoshaController {
     @Autowired
     MiaoshaService miaoshaService;
 
+    /*
+
+     */
     @RequestMapping("/do_miaosha")
     public String list(Model model, MiaoshaUser user, @RequestParam("goodsId")long goodsId){
         model.addAttribute("user",user);
