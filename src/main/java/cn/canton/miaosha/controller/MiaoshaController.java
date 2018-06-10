@@ -37,7 +37,7 @@ public class MiaoshaController {
     MiaoshaService miaoshaService;
 
     /*
-
+        1354.1/sec  linux
      */
     @RequestMapping("/do_miaosha")
     public String list(Model model, MiaoshaUser user, @RequestParam("goodsId")long goodsId){
