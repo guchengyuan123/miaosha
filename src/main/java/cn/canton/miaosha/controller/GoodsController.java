@@ -103,7 +103,7 @@ public class GoodsController {
 
         SpringWebContext ctx = new SpringWebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap(), applicationContext);
         //手动渲染
-        html = thymeleafViewResolver.getTemplateEngine().process("goods_list", ctx);
+        html = thymeleafViewResolver.getTemplateEngine().process("goods_detail", ctx);
         if (!StringUtils.isEmpty(html)) {
             redisService.set(GoodsKey.getGoodsDetail, "" + goodsId, html);
         }
