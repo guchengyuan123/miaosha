@@ -50,15 +50,15 @@ public class GoodsController {
 //        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
 //        MiaoshaUser user = miaoshaUserService.getByToken(response, token);
         model.addAttribute("user", user);
-        //查询商品列表
-        List<GoodsVo> goodsVoList = goodsService.listGoodsVo();
-        model.addAttribute("goodsList", goodsVoList);
-
         //取缓存
         String html = redisService.get(GoodsKey.getGoodsList, "", String.class);
         if (!StringUtils.isEmpty(html)) {
             return html;
         }
+        //查询商品列表
+        List<GoodsVo> goodsVoList = goodsService.listGoodsVo();
+        model.addAttribute("goodsList", goodsVoList);
+
         SpringWebContext ctx = new SpringWebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap(), applicationContext);
         //手动渲染
         html = thymeleafViewResolver.getTemplateEngine().process("goods_list", ctx);
