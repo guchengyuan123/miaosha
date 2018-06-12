@@ -1,5 +1,7 @@
 package cn.canton.miaosha.controller;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import cn.canton.miaosha.redis.RedisService;
 import cn.canton.miaosha.result.Result;
@@ -12,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/login")
@@ -22,21 +22,22 @@ public class LoginController {
     private static Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    MiaoshaUserService miaoshaUserService;
+    MiaoshaUserService userService;
+
     @Autowired
     RedisService redisService;
 
     @RequestMapping("/to_login")
-    public String toLogin(){
+    public String toLogin() {
         return "login";
     }
 
     @RequestMapping("/do_login")
     @ResponseBody
-    public Result<String> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
+    public Result<String> doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {
         log.info(loginVo.toString());
-        //登陆
-        String token = miaoshaUserService.login(response, loginVo);
+        //登录
+        String token = userService.login(response, loginVo);
         return Result.success(token);
     }
 }

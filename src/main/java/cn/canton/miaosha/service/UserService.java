@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 public class UserService {
+
     @Autowired
     UserDao userDao;
 
-    public User getById(int id){
+    public User getById(int id) {
         return userDao.getById(id);
     }
 
@@ -19,7 +21,7 @@ public class UserService {
     public boolean tx() {
         User u1 = new User();
         u1.setId(2);
-        u1.setName("22222");
+        u1.setName("2222");
         userDao.insert(u1);
 
         User u2 = new User();
@@ -29,4 +31,5 @@ public class UserService {
 
         return true;
     }
+
 }

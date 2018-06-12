@@ -79,6 +79,7 @@ public class RedisService {
         try {
             jedis = jedisPool.getResource();
             //生成真正的key
+            String realKey = prefix.getPrefix() + key;
             long ret = jedis.del(key);
             return ret > 0;
         } finally {

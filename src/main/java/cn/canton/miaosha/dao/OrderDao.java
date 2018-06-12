@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 
+
 @Mapper
 public interface OrderDao {
 
@@ -24,4 +25,6 @@ public interface OrderDao {
 
     @Select("select * from order_info where id = #{orderId}")
     public OrderInfo getOrderById(@Param("orderId") long orderId);
+
+
 }

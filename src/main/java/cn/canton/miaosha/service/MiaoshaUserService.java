@@ -16,12 +16,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class MiaoshaUserService {
 
 
-    public static final String COOKIE_NAME_TOKEN = "token";
+    public static final String COOKI_NAME_TOKEN = "token";
 
     @Autowired
     MiaoshaUserDao miaoshaUserDao;
@@ -102,7 +101,7 @@ public class MiaoshaUserService {
 
     private void addCookie(HttpServletResponse response, String token, MiaoshaUser user) {
         redisService.set(MiaoshaUserKey.token, token, user);
-        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
+        Cookie cookie = new Cookie(COOKI_NAME_TOKEN, token);
         cookie.setMaxAge(MiaoshaUserKey.token.expireSeconds());
         cookie.setPath("/");
         response.addCookie(cookie);
