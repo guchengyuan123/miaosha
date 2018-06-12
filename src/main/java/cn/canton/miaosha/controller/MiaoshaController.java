@@ -48,7 +48,7 @@ public class MiaoshaController {
         //判断库存
         GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
         int stock = goods.getStockCount();
-        if (stock < 0){
+        if (stock <= 0){
             return Result.error(CodeMsg.MIAO_SHA_OVER);
         }
         //判断是否已经秒杀到了
