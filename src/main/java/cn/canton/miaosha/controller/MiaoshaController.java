@@ -39,12 +39,8 @@ public class MiaoshaController {
     MiaoshaService miaoshaService;
 
     /**
-     * QPS:1306
-     * 5000 * 10
+     * 1354.1/sec linux
      * */
-    /**
-     * GET POST有什么区别？
-     */
     @RequestMapping(value = "/do_miaosha", method = RequestMethod.POST)
     @ResponseBody
     public Result<OrderInfo> miaosha(Model model, MiaoshaUser user,

@@ -45,9 +45,9 @@ public class GoodsController {
     ApplicationContext applicationContext;
 
     /**
-     * QPS:1267 load:15 mysql
-     * 5000 * 10
-     * QPS:2884, load:5
+     * linux
+     load average: (没有加缓存钱)6.5 --> (加入页面缓存与对象缓存)1.99
+     throughout: (没有加缓存钱)1656.3/sec --> (加入页面缓存与对象缓存)6817.6.1/sec
      */
     @RequestMapping(value = "/to_list", produces = "text/html")
     @ResponseBody
