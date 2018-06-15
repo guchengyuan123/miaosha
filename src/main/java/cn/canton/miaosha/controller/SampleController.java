@@ -1,6 +1,7 @@
 package cn.canton.miaosha.controller;
 
 import cn.canton.miaosha.domain.User;
+import cn.canton.miaosha.rabbitmq.MQSender;
 import cn.canton.miaosha.redis.RedisService;
 import cn.canton.miaosha.redis.UserKey;
 import cn.canton.miaosha.result.CodeMsg;
@@ -22,6 +23,16 @@ public class SampleController {
 
     @Autowired
     RedisService redisService;
+
+    @Autowired
+    MQSender mqSender;
+
+    @RequestMapping("/mq")
+    @ResponseBody
+    public Result<String> mq() {
+        mqSender.send("hello,canton");
+        return Result.success("hello world");
+    }
 
     @RequestMapping("/hello")
     @ResponseBody
